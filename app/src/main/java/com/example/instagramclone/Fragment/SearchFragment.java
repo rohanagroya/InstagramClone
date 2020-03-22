@@ -48,11 +48,8 @@ public class SearchFragment extends Fragment
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
-
         recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
 
         search_bar = view.findViewById(R.id.search_bar);
@@ -68,6 +65,8 @@ public class SearchFragment extends Fragment
 
 
         readUsers();
+
+
         search_bar.addTextChangedListener(new TextWatcher()
         {
             @Override
