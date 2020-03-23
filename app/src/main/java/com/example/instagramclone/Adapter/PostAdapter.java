@@ -49,9 +49,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
-
 
         return new PostAdapter.ViewHolder(view);
     }
@@ -59,11 +57,11 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position)
     {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Post post = mPost.get(position);
+        final Post post = mPost.get(position);
 
 
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
@@ -85,6 +83,36 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
         publisherInfo(holder.imageProfile, holder.username, holder.publisher, post.getPublisher());
+
+
+        isLiked(post.getPostId(), holder.like);
+        numberOfLikes(holder.likes, post.getPostId());
+
+
+
+
+
+        holder.like.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                if (holder.like.getTag().equals("like"))
+                {
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId())
+                            .child(firebaseUser.getUid()).setValue(true);
+                }
+                else
+                {
+                    FirebaseDatabase.getInstance().getReference().child("Likes").child(post.getPostId())
+                            .child(firebaseUser.getUid()).removeValue();
+                }
+
+            }
+        });
+
+
 
     }
 
@@ -142,7 +170,84 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-    private void publisherInfo(final ImageView imageProfile, final TextView username, TextView publisher, String userId)
+
+    private void isLiked(String postId, final ImageView imageView)
+    {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Likes")
+                .child(postId);
+
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                if (dataSnapshot.child(firebaseUser.getUid()).exists())
+                {
+                    imageView.setImageResource(R.drawable.ic_liked);
+
+                    imageView.setTag("liked");
+
+                }
+                else
+                {
+                    imageView.setImageResource(R.drawable.ic_like);
+
+                    imageView.setTag("like");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+
+    }
+
+
+
+
+
+    private void numberOfLikes(final TextView likes, String postId)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
+
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                likes.setText(dataSnapshot.getChildrenCount() + " likes");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    private void publisherInfo(final ImageView imageProfile, final TextView username, final TextView publisher, String userId)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
 
@@ -168,6 +273,4 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             }
         });
     }
-
-
 }

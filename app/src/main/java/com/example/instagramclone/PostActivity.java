@@ -113,7 +113,6 @@ public class PostActivity extends AppCompatActivity
     private void uploadImage()
     {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-
         progressDialog.setMessage("Posting");
         progressDialog.show();
 

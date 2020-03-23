@@ -46,13 +46,11 @@ public class HomeFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        recyclerView = view.findViewById(R.id.recyclerView);
-
+        recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
 
@@ -148,6 +146,10 @@ public class HomeFragment extends Fragment
                         }
                     }
                 }
+
+
+
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -155,7 +157,7 @@ public class HomeFragment extends Fragment
             {
 
             }
-        })
+        });
 
 
     }
