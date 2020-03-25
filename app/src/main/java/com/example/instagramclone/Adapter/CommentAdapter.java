@@ -34,10 +34,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private List<Comment> mComment;
 
 
-    private FirebaseUser firebaseUser;
-
-
-
     public CommentAdapter(Context mContext, List<Comment> mComment)
     {
         this.mContext = mContext;
@@ -55,6 +51,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         View view = LayoutInflater.from(mContext).inflate(R.layout.comment_item, parent, false);
 
         return new CommentAdapter.ViewHolder(view);
+
+
+
+        // View - represents the basic building block for user interface components.
+        //      a view occupies a rectangular area on the screen and is responsible for drawing and event handling.
+        //      View is the basic class for widgets, which are used to create interactive UI components(buttons, text fields, etc)
+
+        // The ViewGroup subclass is the base class for layouts, which are invisible containers that hold other Views (or other ViewGroups) and define their layout properties
+
+
+        // LayoutInflater - instantiates a layout XML file into its corresponding View Objects.
+
+
+        // inflate - inflate a new view hierarchy from the specified XML resource.
+        //      When you write an XML layout, it will be inflated by the Android OS which basically means that it will be rendered by creating view object in memory.
+        //      Inflating is the process of adding a view(.xml) to activity on Runtime.
     }
 
 
@@ -65,7 +77,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();        // gets the current user from Firebase Database
+        
 
         final Comment comment = mComment.get(position);
 

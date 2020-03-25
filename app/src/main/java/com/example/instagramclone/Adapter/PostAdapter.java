@@ -47,9 +47,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -57,6 +54,22 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         View view = LayoutInflater.from(mContext).inflate(R.layout.post_item, parent, false);
 
         return new PostAdapter.ViewHolder(view);
+
+
+        // View - represents the basic building block for user interface components.
+        //      a view occupies a rectangular area on the screen and is responsible for drawing and event handling.
+        //      View is the basic class for widgets, which are used to create interactive UI components(buttons, text fields, etc)
+
+        // The ViewGroup subclass is the base class for layouts, which are invisible containers that hold other Views (or other ViewGroups) and define their layout properties
+
+
+        // LayoutInflater - instantiates a layout XML file into its corresponding View Objects.
+
+
+        // inflate - inflate a new view hierarchy from the specified XML resource.
+        //      When you write an XML layout, it will be inflated by the Android OS which basically means that it will be rendered by creating view object in memory.
+        //      Inflating is the process of adding a view(.xml) to activity on Runtime.
+
     }
 
 
@@ -127,7 +140,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-        // adding comments
+        // adding a comment
         holder.comment.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -136,9 +149,30 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                 Intent intent = new Intent(mContext, CommentsActivity.class);
 
                 intent.putExtra("postId", post.getPostId());
-                intent.putExtra("publisherId", post.getPublisher());
+                intent.putExtra("publisherId", post.getPublisher());        // data transfer between activites. Key value pair
 
                 mContext.startActivity(intent);
+
+
+
+                //  android application components can connect to other android applications.
+                //  this connection is based on a task description represented by an Intent object.
+
+                // Intent - is an abstract description of an operation to be performed.
+                //      an intent provides a facility for performing late runtime binding between the code in different applications.
+                //      its most significant use us in the launching of activities, where it can be thought of as the glue between activities.
+                //      it is basically a passive data structure holding an abstract description of an action to be performed.
+
+
+                // Intents are asynchronous messages which allow application components to request functionality from other android components.
+                //      intents allow you to interact with components from the same applications as well as with components contributed by other applications.
+                //      startActivity() - you can define that the intent should be used to start an activity.
+
+
+                // explicit intent
+                //      explicitly define the component which should be called by the android system.
+                //      intent.putExtra()
+
             }
         });
 
@@ -223,7 +257,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     private void getComments(String postId, final TextView comments)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
-
 
         reference.addValueEventListener(new ValueEventListener()
         {

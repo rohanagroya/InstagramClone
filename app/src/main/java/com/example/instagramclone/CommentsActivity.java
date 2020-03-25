@@ -29,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class CommentsActivity extends AppCompatActivity
 {
@@ -37,18 +38,13 @@ public class CommentsActivity extends AppCompatActivity
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
 
-
-
     EditText addComment;
     ImageView imageProfile;
     TextView post;
-
     String postId;
     String publisherId;
 
     FirebaseUser firebaseUser;
-
-
 
 
 
@@ -58,16 +54,14 @@ public class CommentsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Comments");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Comments");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
-
             @Override
             public void onClick(View v)
             {
@@ -78,19 +72,18 @@ public class CommentsActivity extends AppCompatActivity
 
 
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
         commentList = new ArrayList<>();
+
         commentAdapter = new CommentAdapter(this, commentList);
 
         recyclerView.setAdapter(commentAdapter);
-
 
 
 
@@ -103,21 +96,15 @@ public class CommentsActivity extends AppCompatActivity
         imageProfile = findViewById(R.id.image_profile);
         post = findViewById(R.id.post);
 
-
-
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
 
-
-
-
+        // When user clicks on POST after typing a comment
         Intent intent = getIntent();
 
         postId = intent.getStringExtra("postId");
         publisherId = intent.getStringExtra("publisherId");
-
 
 
         post.setOnClickListener(new View.OnClickListener()
@@ -150,18 +137,19 @@ public class CommentsActivity extends AppCompatActivity
 
 
 
-
-    private void addComment()
+    private void addComment()                   // adds comment to firebase database
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Comments").child(postId);
+            // from database,  go to or create "Comments" section if not already created.
+            // create entry for postId for the photo that was commented on.
 
 
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        hashMap.put("comment", addComment.getText().toString());
-        hashMap.put("publisher", firebaseUser.getUid());
+        hashMap.put("comment", addComment.getText().toString());        // get text from addComment EditText field
+        hashMap.put("publisher", firebaseUser.getUid());                // get the current user id for the account who made the comment
 
-        reference.push().setValue(hashMap);
+        reference.push().setValue(hashMap);                             // push info into database for that postId.  postId -> hashMap value
         addComment.setText("");
     }
 
@@ -172,6 +160,7 @@ public class CommentsActivity extends AppCompatActivity
     private void getImage()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+            // from database, gets the user Id for the current user.
 
 
         reference.addValueEventListener(new ValueEventListener()
@@ -179,12 +168,21 @@ public class CommentsActivity extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
+                // DataSnapShot instance contains data from a Firebase Database location.  Anytime you read Database data, you receive the data as a DataSnapShot.
+                // They are efficiently generated immutable copies of the data at a Firebase Database location.
+                // They can't be modified and will never change.
+                // To modify data at a location, use DatabaseReference reference with setValue(Object) etc...
+
 
                 User user = dataSnapshot.getValue(User.class);
+                    // User - from Model Package
+
 
                 Glide.with(getApplicationContext()).load(user.getImageURL()).into(imageProfile);
+                    // retrieves user profile image and adds it into image_profile section for xml file.
 
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
@@ -212,8 +210,12 @@ public class CommentsActivity extends AppCompatActivity
                 for (DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     Comment comment = snapshot.getValue(Comment.class);
+                        // retrieves the values from Database and converts it into Comment class since the variables for the class and the keys in database match
+                        //      variables for Comment: comment and publisher
+                        //      keys in database:    comment and publisher
 
                     commentList.add(comment);
+
                 }
 
 
