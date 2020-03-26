@@ -194,7 +194,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryDark"
                     android:text="full name"
-                    android:id="@+id/fullname"      />
+                    android:id="@+id/fullName"      />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -256,7 +256,7 @@
                 android:id="@+id/recycler_view_save"    />
 
 
-            
+
 
 
 
