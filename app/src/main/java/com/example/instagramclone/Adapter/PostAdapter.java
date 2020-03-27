@@ -2,15 +2,19 @@ package com.example.instagramclone.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.CommentsActivity;
+import com.example.instagramclone.Fragment.PostDetailFragment;
+import com.example.instagramclone.Fragment.ProfileFragment;
 import com.example.instagramclone.Model.Post;
 import com.example.instagramclone.Model.User;
 import com.example.instagramclone.R;
@@ -42,7 +46,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
@@ -67,10 +70,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         //      Inflating is the process of adding a view(.xml) to activity on Runtime.
 
     }
-
-
-
-
 
 
 
@@ -114,7 +113,79 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-        // when user clicks on save post
+
+
+
+
+
+        // ********************* when user clicks on profile picture *********************
+        holder.imageProfile.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+
+                editor.putString("profileid", post.getPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+            }
+        });
+
+
+
+        // ********************* when user clicks on a username *********************
+        holder.username.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+
+                editor.putString("profileid", post.getPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+            }
+        });
+
+
+        // ********************* when user clicks on the publisher of a comment *********************
+        holder.publisher.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+
+                editor.putString("profileid", post.getPublisher());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+            }
+        });
+
+
+        // ********************* when user clicks on the post image *********************
+        holder.postImage.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+
+                editor.putString("postid", post.getPostId());
+                editor.apply();
+
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostDetailFragment()).commit();
+            }
+        });
+
+
+
+
+        // ********************* when user clicks on save post *********************
         holder.save.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -132,7 +203,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         });
 
 
-        // when user clicks the like button for a post
+        // ********************* when user clicks the like button for a post *********************
         holder.like.setOnClickListener(new View.OnClickListener()
         {
 
@@ -157,7 +228,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-        // when user clicks on comment button
+        // ********************* when user clicks on comment button *********************
         holder.comment.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -195,7 +266,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
-        // user clicks on view all comments
+        // ********************* user clicks on view all comments *********************
         holder.comments.setOnClickListener(new View.OnClickListener()
         {
             @Override
