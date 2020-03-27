@@ -63,7 +63,7 @@ public class PostActivity extends AppCompatActivity
         post = findViewById(R.id.post);
         description = findViewById(R.id.description);
 
-        storageReference = FirebaseStorage.getInstance().getReference("posts");
+        storageReference = FirebaseStorage.getInstance().getReference("Posts");
 
 
 

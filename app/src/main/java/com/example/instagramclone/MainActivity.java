@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
+    // Bottom navigation view
+    // Home, Search, add photos, likes, profile
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener()
     {
         @Override
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity
 
                 case R.id.nav_profile:
                     SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                    editor.putString("profiledid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                     editor.apply();
                     selectedFragment = new ProfileFragment();
                     break;

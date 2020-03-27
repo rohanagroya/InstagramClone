@@ -57,19 +57,13 @@ public class HomeFragment extends Fragment
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
         postLists = new ArrayList<>();
 
         postAdapter = new PostAdapter(getContext(), postLists);
 
         recyclerView.setAdapter(postAdapter);
 
-
-
-
         checkFollowing();
-
-
 
 
         return view;
