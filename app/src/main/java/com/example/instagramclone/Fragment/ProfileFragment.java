@@ -152,17 +152,17 @@ public class ProfileFragment extends Fragment
                 {
                     // go to edit profile
                 }
-                else if (button.equals("follow"))
+                else if (button.equals("Follow"))
                 {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(profileId).setValue(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Followers").child(firebaseUser.getUid()).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("Followers").child(firebaseUser.getUid()).setValue(true);
                 }
-                else if (button.equals("following"))
+                else if (button.equals("Following"))
                 {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(profileId).removeValue();
 
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Followers").child(firebaseUser.getUid()).removeValue();
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("Followers").child(firebaseUser.getUid()).removeValue();
 
                 }
 
@@ -216,8 +216,7 @@ public class ProfileFragment extends Fragment
 
     private void checkFollow()
     {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("following");
-
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following");
 
 
         reference.addValueEventListener(new ValueEventListener()
@@ -227,11 +226,11 @@ public class ProfileFragment extends Fragment
             {
                 if (dataSnapshot.child(profileId).exists())
                 {
-                    editProfile.setText("following");
+                    editProfile.setText("Following");
                 }
                 else
                 {
-                    editProfile.setText("follow");
+                    editProfile.setText("Follow");
                 }
             }
 
@@ -250,8 +249,8 @@ public class ProfileFragment extends Fragment
 
     private void getFollowers()
     {
-        // get the number of followers
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("followers");
+        // get the number of followers the current user has
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("Followers");
 
         reference.addValueEventListener(new ValueEventListener()
         {
@@ -259,6 +258,7 @@ public class ProfileFragment extends Fragment
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 followers.setText("" + dataSnapshot.getChildrenCount());
+                    // set the number of followers the user has onto the screen
             }
 
             @Override
@@ -270,16 +270,16 @@ public class ProfileFragment extends Fragment
 
 
 
-
         // get the number users the current user is following
-        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("following");
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("Following");
 
         reference1.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                followers.setText("" + dataSnapshot.getChildrenCount());
+                following.setText("" + dataSnapshot.getChildrenCount());
+                    // sets the number of users the current user is following
             }
 
             @Override

@@ -67,28 +67,37 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
     {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-
         final User user = mUsers.get(position);
 
-        holder.btn_follow.setVisibility(View.VISIBLE);
-
-        holder.username.setText(user.getUserName());
-        holder.fullname.setText(user.getFullName());
+        holder.btn_follow.setVisibility(View.VISIBLE);          // sets follow button visible
+        holder.username.setText(user.getUserName());            // sets username
+        holder.fullName.setText(user.getFullName());            // sets full name
 
 
         Glide.with(mContext).load(user.getImageURL()).into(holder.image_profile);
+            // Glide is a fast and efficient open source media management and image loading framework for android that
+            //      wraps decoding, memory and disk caching, and resource pooling into a simple and easy to use interface.
+            // Primary focus is on making scrolling any kind of a list of images as smooth and fast as possible.
+
+
+
 
 
         isFollowing(user.getId(), holder.btn_follow);
+            // Displays button next to other user's username.
+            // if following, button displays "following". Else, it displays "follow"
 
 
 
         if (user.getId().equals(firebaseUser.getUid()))
         {
             holder.btn_follow.setVisibility(View.GONE);
+                // if its not the current user's profile, hide the "edit profile" button
         }
 
 
+
+        // For when button navigation bar is clicked
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -98,28 +107,31 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                 editor.putString("profileid", user.getId());
                 editor.apply();
 
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
             }
         });
 
 
+
+
+        // For when follow / following button is clicked
         holder.btn_follow.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if (holder.btn_follow.getText().toString().equals("Follow"))
+                if (holder.btn_follow.getText().toString().equals("Follow"))        // if follow button is clicked
                 {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(user.getId()).setValue(true);
 
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Followers").child(firebaseUser.getUid()).setValue(true);
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(user.getId()).child("Followers").child(firebaseUser.getUid()).setValue(true);
                 }
 
-                else
+                else    // if following button is clicked
                 {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(user.getId()).removeValue();
 
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Followers").child(firebaseUser.getUid()).removeValue();                }
+                    FirebaseDatabase.getInstance().getReference().child("Follow").child(user.getId()).child("Followers").child(firebaseUser.getUid()).removeValue();                }
 
             }
         });
@@ -144,26 +156,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
     {
 
         public TextView username;
-        public TextView fullname;
+        public TextView fullName;
         public CircleImageView image_profile;
         public Button btn_follow;
-
-
 
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
 
-
             username = itemView.findViewById(R.id.username);
-            fullname = itemView.findViewById(R.id.fullname);
+            fullName = itemView.findViewById(R.id.fullName);
             image_profile = itemView.findViewById(R.id.image_profile);
             btn_follow = itemView.findViewById(R.id.btn_follow);
-
-
-
-
         }
     }
 
@@ -171,20 +176,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
 
 
-
-    private void isFollowing(final String userid, final Button button)
+    // Displays button next to other user's username.  If following, button displays "following". Else, it displays "follow"
+    private void isFollowing(final String userId, final Button button)
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following");
-
-
-
 
         reference.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                if (dataSnapshot.child(userid).exists())
+                if (dataSnapshot.child(userId).exists())
                 {
                     button.setText("Following");
                 }

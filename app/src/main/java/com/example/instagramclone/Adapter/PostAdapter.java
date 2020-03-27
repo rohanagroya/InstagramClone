@@ -2,16 +2,13 @@ package com.example.instagramclone.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.CommentsActivity;
 import com.example.instagramclone.Model.Post;
@@ -25,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -91,7 +87,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
 
 
-
+        // show if description is not null. Else show description of post.
         if (post.getDescription().equals(""))
         {
             holder.description.setVisibility(View.GONE);
@@ -209,6 +205,9 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
+
+
+    // inner class
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         public ImageView imageProfile;
@@ -232,7 +231,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             super(itemView);
 
 
-
             imageProfile = itemView.findViewById(R.id.image_profile);
             postImage = itemView.findViewById(R.id.post_image);
             like = itemView.findViewById(R.id.like);
@@ -243,8 +241,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
-
-
 
         }
     }
@@ -370,7 +366,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 User user = dataSnapshot.getValue(User.class);
-
 
                 Glide.with(mContext).load(user.getImageURL()).into(imageProfile);
 

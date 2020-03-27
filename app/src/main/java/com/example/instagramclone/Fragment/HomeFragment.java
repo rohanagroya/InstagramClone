@@ -30,9 +30,7 @@ public class HomeFragment extends Fragment
 
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
-
     private List<Post> postLists;
-
     private List<String> followingList;
 
 
@@ -64,6 +62,7 @@ public class HomeFragment extends Fragment
         recyclerView.setAdapter(postAdapter);
 
         checkFollowing();
+
 
 
         return view;
@@ -118,7 +117,6 @@ public class HomeFragment extends Fragment
     private void readPosts()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-
 
 
         reference.addValueEventListener(new ValueEventListener()
