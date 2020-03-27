@@ -58,6 +58,12 @@ public class ProfileFragment extends Fragment
     List<Post> postList;
 
 
+    List<String> mySaves;
+    RecyclerView recyclerViewSaves;
+    MyPhotoAdapter myPhotoAdapterSaves;
+    List<Post> postListSaves;
+
+
 
 
 
@@ -99,19 +105,31 @@ public class ProfileFragment extends Fragment
         savedPhotos = view.findViewById(R.id.saved_photos);
 
 
-
+        // ************* for regular posts *****************************
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-
-
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);       // sets 3 photos for width
         recyclerView.setLayoutManager(linearLayoutManager);
-
         postList = new ArrayList<>();
         myPhotoAdapter = new MyPhotoAdapter(getContext(), postList);
-
         recyclerView.setAdapter(myPhotoAdapter);
 
+
+
+        // ************* for saved posts ********************************
+        recyclerViewSaves = view.findViewById(R.id.recycler_view_save);
+        recyclerViewSaves.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManagerSaves = new GridLayoutManager(getContext(), 3);       // sets 3 photos for width
+        recyclerViewSaves.setLayoutManager(linearLayoutManagerSaves);
+        postListSaves = new ArrayList<>();
+        myPhotoAdapterSaves = new MyPhotoAdapter(getContext(), postListSaves);
+        recyclerViewSaves.setAdapter(myPhotoAdapterSaves);
+
+
+
+
+        recyclerView.setVisibility(View.VISIBLE);       // make recycler view for regular posts visible
+        recyclerViewSaves.setVisibility(View.GONE);     // hide recycler view for saved posts
 
 
 
@@ -120,7 +138,7 @@ public class ProfileFragment extends Fragment
         getFollowers();
         getNumberOfPosts();
         getMyPhotos();
-
+        getMySaves();
 
 
 
@@ -168,6 +186,35 @@ public class ProfileFragment extends Fragment
 
             }
         });
+
+
+
+
+        // when user clicks on myPhotos icon, show the user's uploaded photos
+        myPhotos.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                recyclerView.setVisibility(View.VISIBLE);       // make recycler view for regular posts visible
+                recyclerViewSaves.setVisibility(View.GONE);     // hide recycler view for saved posts
+            }
+        });
+
+
+        // when user clicks on savedPhotos icon, show the posts the user has saved
+        savedPhotos.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                recyclerView.setVisibility(View.GONE);              // hide recycler view for regular posts
+                recyclerViewSaves.setVisibility(View.VISIBLE);     // make recycler view visible for saved posts
+
+
+            }
+        });
+
 
         return view;
     }
@@ -369,6 +416,79 @@ public class ProfileFragment extends Fragment
             }
         });
 
+
+    }
+
+
+
+
+
+
+
+    private void getMySaves()
+    {
+        mySaves = new ArrayList<>();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Saves").child(firebaseUser.getUid());
+
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren())
+                {
+                    mySaves.add(snapshot.getKey());
+                }
+
+                readSaves();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+
+    }
+
+
+    private void readSaves()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                postListSaves.clear();
+
+                for (DataSnapshot snapshot: dataSnapshot.getChildren())
+                {
+                    Post post = snapshot.getValue(Post.class);
+
+                    for (String id: mySaves)
+                    {
+                        if (post.getPostId().equals(id))
+                        {
+                            postListSaves.add(post);
+                        }
+                    }
+                }
+
+                myPhotoAdapterSaves.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
 
     }
 
