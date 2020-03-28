@@ -1,6 +1,7 @@
 package com.example.instagramclone.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.Adapter.MyPhotoAdapter;
+import com.example.instagramclone.EditProfileActivity;
 import com.example.instagramclone.Model.Post;
 import com.example.instagramclone.Model.User;
 import com.example.instagramclone.R;
@@ -34,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -156,7 +159,7 @@ public class ProfileFragment extends Fragment
 
 
 
-        // for when the user clicks " Edit Profile" on the profile screen
+        // for when the user clicks " Edit Profile" or "Follow" or "Following"  on the profile screen
         editProfile.setOnClickListener(new View.OnClickListener()
         {
 
@@ -169,12 +172,15 @@ public class ProfileFragment extends Fragment
                 if (button.equals("Edit Profile"))
                 {
                     // go to edit profile
+                    startActivity(new Intent(getContext(), EditProfileActivity.class));
                 }
                 else if (button.equals("Follow"))
                 {
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(profileId).setValue(true);
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(profileId).child("Followers").child(firebaseUser.getUid()).setValue(true);
+
+                    addNotification();
                 }
                 else if (button.equals("Following"))
                 {
@@ -220,6 +226,26 @@ public class ProfileFragment extends Fragment
     }
 
 
+
+
+    public void addNotification()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileId);
+
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("text", "started following you");
+        hashMap.put("postId", "");
+        hashMap.put("isPost", false);
+
+
+
+
+        reference.push().setValue(hashMap);
+        // updates the database with values inside the hashMap
+    }
 
 
 

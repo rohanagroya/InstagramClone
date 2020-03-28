@@ -151,7 +151,30 @@ public class CommentsActivity extends AppCompatActivity
 
         reference.push().setValue(hashMap);                             // push info into database for that postId.  postId -> hashMap value
         addComment.setText("");
+        addNotification();
     }
+
+
+
+    public void addNotification()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(publisherId);
+
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("userId", firebaseUser.getUid());
+        hashMap.put("text", "commented: " + addComment.getText().toString());
+        hashMap.put("postId", postId);
+        hashMap.put("isPost", true);
+
+
+
+
+        reference.push().setValue(hashMap);
+        // updates the database with values inside the hashMap
+    }
+
 
 
 
