@@ -31,7 +31,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_story_plus"
-            android:id="@+id/story_plus"
+            android:id="@+id/story_plus"    />
 
 
     </RelativeLayout>

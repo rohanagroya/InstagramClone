@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.instagramclone.Adapter.PostAdapter;
+import com.example.instagramclone.Adapter.StoryAdapter;
 import com.example.instagramclone.Model.Post;
+import com.example.instagramclone.Model.Story;
 import com.example.instagramclone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,14 @@ public class HomeFragment extends Fragment
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postLists;
+
+
+    private RecyclerView recyclerViewStory;
+    private StoryAdapter storyAdapter;
+    private List<Story> storyList;
+
+
+
     private List<String> followingList;
 
     ProgressBar progressBar;
@@ -57,12 +67,29 @@ public class HomeFragment extends Fragment
 
 
         recyclerView.setLayoutManager(linearLayoutManager);
-
         postLists = new ArrayList<>();
-
         postAdapter = new PostAdapter(getContext(), postLists);
-
         recyclerView.setAdapter(postAdapter);
+
+
+
+        // for story feature
+        recyclerViewStory = view.findViewById(R.id.recycler_view_story);
+        recyclerViewStory.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewStory.setLayoutManager(linearLayoutManager1);
+        storyList = new ArrayList<>();
+        storyAdapter = new StoryAdapter(getContext(), storyList);
+        recyclerViewStory.setAdapter(storyAdapter);
+
+
+
+
+
+
+
+
+
 
         progressBar = view.findViewById(R.id.progress_circular);
 
@@ -98,6 +125,7 @@ public class HomeFragment extends Fragment
 
 
                 readPosts();
+                readStory();
 
             }
 
@@ -164,6 +192,58 @@ public class HomeFragment extends Fragment
 
 
 
+
+    private void readStory()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story");
+
+
+        reference.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                long timeCurrent = System.currentTimeMillis();
+
+                storyList.clear();
+
+                storyList.add( new Story("", 0, 0, "", FirebaseAuth.getInstance().getCurrentUser().getUid()));
+
+
+                for (String id: followingList)
+                {
+                    int countStory = 0;
+
+                    Story story = null;
+
+                    for (DataSnapshot snapshot: dataSnapshot.child(id).getChildren())
+                    {
+                        story = snapshot.getValue(Story.class);
+
+                        if (timeCurrent > story.getTimeStart() && timeCurrent < story.getTimeEnd())
+                        {
+                            countStory++;
+                        }
+                    }
+
+                    if (countStory > 0)
+                    {
+                        storyList.add(story);
+                    }
+                }
+
+
+
+                storyAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
 
 
 
