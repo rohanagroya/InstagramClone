@@ -1,6 +1,8 @@
 package com.example.instagramclone.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.Fragment.ProfileFragment;
+import com.example.instagramclone.MainActivity;
 import com.example.instagramclone.Model.User;
 import com.example.instagramclone.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,16 +36,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 {
     private Context mContext;
     private List<User> mUsers;
+    private boolean isFragment;     // necessary since you can't jump from an activity to a fragment
 
 
     private FirebaseUser firebaseUser;
 
 
 
-    public UserAdapter(Context mContext, List<User> mUsers)
+    public UserAdapter(Context mContext, List<User> mUsers, boolean isFragment)
     {
         this.mContext = mContext;
         this.mUsers = mUsers;
+        this.isFragment = isFragment;
     }
 
 
@@ -104,11 +109,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
             @Override
             public void onClick(View v)
             {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
-                editor.putString("profileid", user.getId());
-                editor.apply();
+                if (isFragment)
+                {
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                    editor.putString("profileid", user.getId());
+                    editor.apply();
 
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+
+                }
+                else
+                {
+                    Intent intent = new Intent(mContext, MainActivity.class);
+
+                    intent.putExtra("publisherid", user.getId());
+
+                    mContext.startActivity(intent);
+                }
+
             }
         });
 

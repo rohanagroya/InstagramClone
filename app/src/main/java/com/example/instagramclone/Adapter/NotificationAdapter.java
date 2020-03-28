@@ -177,7 +177,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
                 User user = dataSnapshot.getValue(User.class);
-                
+
 
                 Glide.with(mContext).load(user.getImageURL()).into(imageView);
 

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.Adapter.MyPhotoAdapter;
 import com.example.instagramclone.EditProfileActivity;
+import com.example.instagramclone.FollowersActivity;
 import com.example.instagramclone.Model.Post;
 import com.example.instagramclone.Model.User;
 import com.example.instagramclone.R;
@@ -218,6 +219,39 @@ public class ProfileFragment extends Fragment
                 recyclerViewSaves.setVisibility(View.VISIBLE);     // make recycler view visible for saved posts
 
 
+            }
+        });
+
+
+
+
+        // when followers icon is clicked, display all users who are following that user
+        followers.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "Followers");
+                startActivity(intent);
+            }
+        });
+
+
+
+        // when following icon is clicked, display all accounts that user is following
+        following.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), FollowersActivity.class);
+
+                intent.putExtra("id", profileId);
+                intent.putExtra("title", "Following");
+                startActivity(intent);
             }
         });
 
