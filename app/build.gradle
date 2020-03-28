@@ -68,4 +68,9 @@ dependencies {
 
     // material edit text
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+
+
+    // for instagram stories
+    // library that shows a horizontal progress
+    implementation 'com.github.shts:StoriesProgressView:3.0.0'
 }
