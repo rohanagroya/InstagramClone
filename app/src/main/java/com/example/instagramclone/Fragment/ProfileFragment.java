@@ -26,6 +26,7 @@ import com.example.instagramclone.EditProfileActivity;
 import com.example.instagramclone.FollowersActivity;
 import com.example.instagramclone.Model.Post;
 import com.example.instagramclone.Model.User;
+import com.example.instagramclone.OptionsActivity;
 import com.example.instagramclone.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -193,6 +194,22 @@ public class ProfileFragment extends Fragment
 
             }
         });
+
+
+
+        // when user clicks on the options icon
+        options.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), OptionsActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
 
 
 

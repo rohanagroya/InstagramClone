@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagramclone.CommentsActivity;
 import com.example.instagramclone.FollowersActivity;
 import com.example.instagramclone.Fragment.PostDetailFragment;
@@ -85,7 +86,11 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         final Post post = mPost.get(position);
 
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage);
+
+
+        Glide.with(mContext).load(post.getPostImage()).apply(new RequestOptions().placeholder(R.drawable.placeholder)).into(holder.postImage);
+
+
 
 
         // show if description is not null. Else show description of post.
