@@ -207,7 +207,7 @@ public class HomeFragment extends Fragment
 
                 storyList.clear();
 
-                storyList.add( new Story("", 0, 0, "", FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                storyList.add( new Story("", "", 0, 0, FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
 
                 for (String id: followingList)

@@ -118,9 +118,8 @@ public class AddStoryActivity extends AppCompatActivity
 
                         String storyId = reference.push().getKey();
 
+
                         long timeEnd = System.currentTimeMillis() + 86400000;       // 86400000 1 day in milliseconds
-
-
 
 
                         HashMap<String, Object> hashMap = new HashMap<>();

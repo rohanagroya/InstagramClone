@@ -4,12 +4,12 @@ public class Story
 {
 
     private String imageUrl;
+    private String storyId;
     private long timeStart;
     private long timeEnd;
-    private String storyId;
     private String userId;
 
-    public Story(String imageUrl, long timeStart, long timeEnd, String storyId, String userId)
+    public Story(String imageUrl, String storyId, long timeStart, long timeEnd , String userId)
     {
         this.imageUrl = imageUrl;
         this.timeStart = timeStart;
@@ -24,7 +24,7 @@ public class Story
     }
 
 
-    public void setImageUrl(String imageUrl)
+    public void setImageURL(String imageUrl)
     {
         this.imageUrl = imageUrl;
     }
@@ -49,7 +49,7 @@ public class Story
         this.userId = userId;
     }
 
-    public String getImageUrl()
+    public String getImageURL()
     {
         return imageUrl;
     }
