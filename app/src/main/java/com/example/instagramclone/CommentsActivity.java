@@ -71,6 +71,12 @@ public class CommentsActivity extends AppCompatActivity
 
 
 
+        Intent intent = getIntent();
+
+        postId = intent.getStringExtra("postId");
+        publisherId = intent.getStringExtra("publisherId");
+
+
 
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -81,7 +87,7 @@ public class CommentsActivity extends AppCompatActivity
 
         commentList = new ArrayList<>();
 
-        commentAdapter = new CommentAdapter(this, commentList);
+        commentAdapter = new CommentAdapter(this, commentList, postId);
 
         recyclerView.setAdapter(commentAdapter);
 
@@ -100,13 +106,10 @@ public class CommentsActivity extends AppCompatActivity
 
 
 
+
+
+
         // When user clicks on POST after typing a comment
-        Intent intent = getIntent();
-
-        postId = intent.getStringExtra("postId");
-        publisherId = intent.getStringExtra("publisherId");
-
-
         post.setOnClickListener(new View.OnClickListener()
         {
 
@@ -144,12 +147,20 @@ public class CommentsActivity extends AppCompatActivity
             // create entry for postId for the photo that was commented on.
 
 
+        String commentId = reference.push().getKey();
+
+
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("comment", addComment.getText().toString());        // get text from addComment EditText field
         hashMap.put("publisher", firebaseUser.getUid());                // get the current user id for the account who made the comment
+        hashMap.put("commentId", commentId);
 
-        reference.push().setValue(hashMap);                             // push info into database for that postId.  postId -> hashMap value
+
+
+
+
+        reference.child(commentId).setValue(hashMap);                             // push info into database for that postId.  postId -> hashMap value
         addComment.setText("");
         addNotification();
     }

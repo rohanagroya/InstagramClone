@@ -1,13 +1,21 @@
 package com.example.instagramclone.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +28,8 @@ import com.example.instagramclone.Fragment.ProfileFragment;
 import com.example.instagramclone.Model.Post;
 import com.example.instagramclone.Model.User;
 import com.example.instagramclone.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -307,6 +317,70 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
 
 
+        // when user clicks on the 3 dots "more" menu button
+        holder.more.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                PopupMenu popupMenu = new PopupMenu(mContext, v);
+
+
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener()
+                {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item)
+                    {
+                       switch (item.getItemId())
+                       {
+                           case R.id.edit:
+                               editPost(post.getPostId());
+                               return true;
+
+                           case R.id.delete:
+                               FirebaseDatabase.getInstance().getReference("Posts").child(post.getPostId()).removeValue()
+                                       .addOnCompleteListener(new OnCompleteListener<Void>()
+                                       {
+                                           @Override
+                                           public void onComplete(@NonNull Task<Void> task)
+                                           {
+                                               if (task.isSuccessful())
+                                               {
+                                                   Toast.makeText(mContext, "Deleted!", Toast.LENGTH_SHORT).show();
+                                               }
+                                           }
+                               });
+                               return true;
+
+
+                           case R.id.report:
+                               Toast.makeText(mContext, "Report Post", Toast.LENGTH_SHORT).show();
+                               return true;
+
+
+                           default:
+                               return false;
+                       }
+                    }
+                });
+
+
+
+                popupMenu.inflate(R.menu.post_menu);
+
+                if (! post.getPublisher().equals(firebaseUser.getUid()))
+                {
+                    popupMenu.getMenu().findItem(R.id.edit).setVisible(false);
+                    popupMenu.getMenu().findItem(R.id.delete).setVisible(false);
+                }
+
+
+                popupMenu.show();
+            }
+        });
+
+
     }
 
 
@@ -331,6 +405,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         public ImageView like;
         public ImageView comment;
         public ImageView save;
+        public ImageView more;
 
         public TextView username;
         public TextView likes;
@@ -352,11 +427,13 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
             save = itemView.findViewById(R.id.save);
+            more = itemView.findViewById(R.id.more);
             username = itemView.findViewById(R.id.username);
             likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
+
 
         }
     }
@@ -565,6 +642,78 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     }
 
 
+
+
+    private void editPost(final String postId)
+    {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+        alertDialog.setTitle("Edit Post");
+
+
+        final EditText editText = new EditText(mContext);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+
+        editText.setLayoutParams(layoutParams);
+        alertDialog.setView(editText);
+
+
+        getText(postId, editText);
+
+
+        alertDialog.setPositiveButton("Edit", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                HashMap<String, Object> hashMap = new HashMap<>();
+
+                hashMap.put("description", editText.getText().toString());
+
+
+                FirebaseDatabase.getInstance().getReference("Posts").child(postId).updateChildren(hashMap);
+            }
+        });
+
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
+    }
+
+
+
+
+    private void getText(String postId, final EditText editText)
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
+
+
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                editText.setText(dataSnapshot.getValue(Post.class).getDescription());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError)
+            {
+
+            }
+        });
+    }
 
 
 }

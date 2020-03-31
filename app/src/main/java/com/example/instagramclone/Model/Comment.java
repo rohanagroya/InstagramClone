@@ -5,12 +5,14 @@ public class Comment
 
     private String comment;
     private String publisher;
+    private String commentId;
 
 
-    public Comment(String comment, String publisher)
+    public Comment(String comment, String publisher, String commentId)
     {
         this.comment = comment;
         this.publisher = publisher;
+        this.commentId = commentId;
     }
 
 
@@ -34,6 +36,11 @@ public class Comment
         this.comment = comment;
     }
 
+    public void setCommentId(String commentId)
+    {
+        this.commentId = commentId;
+    }
+
     public String getPublisher()
     {
         return publisher;
@@ -42,6 +49,11 @@ public class Comment
     public String getComment()
     {
         return comment;
+    }
+
+    public String getCommentId()
+    {
+        return commentId;
     }
 
 
