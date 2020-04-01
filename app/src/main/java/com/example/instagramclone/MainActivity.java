@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
 {
-
     BottomNavigationView bottomNavigationView;
 
     Fragment selectedFragment = null;
@@ -65,9 +64,7 @@ public class MainActivity extends AppCompatActivity
             if (selectedFragment != null)
             {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-
             }
-
 
 
             return true;
@@ -88,44 +85,31 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-
 
 
         Bundle intent = getIntent().getExtras();
 
+
+        // Intent describes the activity to be executed.
+        // An Intent can also contain data, described as a Bundle.
+        // The Bundle object is used to pas data between activities.
+        // This data can be retrieved from the Intent through getExtras().
+
+
         if (intent != null)
         {
             String publisher = intent.getString("publisherid");
-
             SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-
             editor.putString("profileid", publisher);
-
             editor.apply();
-
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
         }
         else
         {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-
         }
-
-
     }
-
-
-
-
-
-
-
-
-
 }

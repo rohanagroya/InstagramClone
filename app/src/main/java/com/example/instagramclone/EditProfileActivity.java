@@ -40,7 +40,6 @@ import java.util.HashMap;
 
 public class EditProfileActivity extends AppCompatActivity
 {
-
     ImageView close;
     ImageView image_profile;
     TextView save;
@@ -98,13 +97,11 @@ public class EditProfileActivity extends AppCompatActivity
                 bio.setText(user.getBio());
 
                 Glide.with(getApplicationContext()).load(user.getImageURL()).into(image_profile);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
 
@@ -163,8 +160,6 @@ public class EditProfileActivity extends AppCompatActivity
             }
         });
 
-
-
     }
 
 
@@ -173,7 +168,6 @@ public class EditProfileActivity extends AppCompatActivity
 
     private void updateProfile(String fullName, String username, String bio)
     {
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
 

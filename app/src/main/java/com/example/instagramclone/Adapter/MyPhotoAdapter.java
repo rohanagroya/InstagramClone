@@ -20,7 +20,6 @@ import java.util.List;
 
 public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHolder>
 {
-
     private Context context;
     private List<Post> mPosts;
 
@@ -71,6 +70,7 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
 
     }
 
+
     @Override
     public int getItemCount()
     {
@@ -81,14 +81,9 @@ public class MyPhotoAdapter extends RecyclerView.Adapter<MyPhotoAdapter.ViewHold
 
 
 
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public ImageView postImage;
-
 
 
         public ViewHolder(@NonNull View itemView)

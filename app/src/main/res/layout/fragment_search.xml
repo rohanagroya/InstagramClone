@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,12 +29,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
                 android:hint="Search..."
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"/>
-
+                android:id="@+id/search_bar"            />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -50,9 +49,6 @@
         android:layout_below="@id/bar"
         android:id="@+id/recyclerView"  >
 
-
-
     </androidx.recyclerview.widget.RecyclerView>
-
 
 </RelativeLayout>

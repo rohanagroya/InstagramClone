@@ -96,8 +96,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         final Post post = mPost.get(position);
 
 
-
-
         Glide.with(mContext).load(post.getPostImage()).apply(new RequestOptions().placeholder(R.drawable.placeholder)).into(holder.postImage);
 
 
@@ -379,8 +377,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                 popupMenu.show();
             }
         });
-
-
     }
 
 
@@ -433,8 +429,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
-
-
         }
     }
 
@@ -490,7 +484,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -538,10 +531,8 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
-
     }
 
 
@@ -565,7 +556,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -602,7 +592,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -636,7 +625,6 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -710,10 +698,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
 }

@@ -203,7 +203,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public ImageView imageProfile;
         public TextView username;
         public TextView comment;
@@ -218,7 +217,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             imageProfile = itemView.findViewById(R.id.image_profile);
             username = itemView.findViewById(R.id.username);
             comment = itemView.findViewById(R.id.comment);
-
         }
     }
 
@@ -246,13 +244,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
 
     }
-
-
-
-
 }

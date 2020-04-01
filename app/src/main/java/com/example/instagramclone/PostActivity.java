@@ -36,7 +36,6 @@ import java.util.HashMap;
 
 public class PostActivity extends AppCompatActivity
 {
-
     Uri imageUri;
     String myUrl = "";
     StorageTask uploadTask;
@@ -224,6 +223,4 @@ public class PostActivity extends AppCompatActivity
             finish();
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +8,7 @@
     android:orientation="vertical"
     tools:context=".PostActivity">
     
-    
-    
-    
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,15 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:windowBackground"
-            android:id="@+id/toolbar" >
-
+            android:id="@+id/toolbar"       >
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-
-
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -37,8 +33,6 @@
                     android:layout_alignParentStart="true"
                     android:src="@drawable/ic_close"
                     android:id="@+id/close"     />
-
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,18 +45,18 @@
                     android:textColor="@color/colorPrimary"
                     android:id="@+id/post"          />
 
-
-
-
-
-
             </RelativeLayout>
 
 
         </androidx.appcompat.widget.Toolbar>
 
-
     </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+
 
 
 
@@ -72,7 +66,6 @@
         android:padding="8dp"
         android:orientation="vertical"      >
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -81,8 +74,6 @@
             android:src="@mipmap/ic_launcher"
             android:id="@+id/image_added"       />
 
-
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,11 +81,6 @@
             android:hint="Description"
             android:maxLines="5"
             android:id="@+id/description"   />
-
-
-
-
-
 
     </LinearLayout>
 

@@ -32,7 +32,6 @@ import jp.shts.android.storiesprogressview.StoriesProgressView;
 
 public class StoryActivity extends AppCompatActivity implements StoriesProgressView.StoriesListener
 {
-
     int counter = 0;
     long pressTime = 0L;
     long limit = 500L;
@@ -321,7 +320,6 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -383,7 +381,6 @@ public class StoryActivity extends AppCompatActivity implements StoriesProgressV
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
 

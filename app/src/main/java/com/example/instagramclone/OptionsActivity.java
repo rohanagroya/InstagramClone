@@ -50,10 +50,6 @@ public class OptionsActivity extends AppCompatActivity
 
 
 
-
-
-
-
         // when user clicks log out
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +60,5 @@ public class OptionsActivity extends AppCompatActivity
                 startActivity(new Intent(OptionsActivity.this, StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
-
-
-
-
     }
 }

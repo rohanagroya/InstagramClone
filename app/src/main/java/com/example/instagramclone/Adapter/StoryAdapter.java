@@ -33,10 +33,8 @@ import java.util.List;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
 {
-
     private Context mContext;
     private List<Story> mStory;
-
 
 
     public StoryAdapter(Context mContext, List<Story> mStory)
@@ -76,7 +74,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position)
     {
-
         final Story story = mStory.get(position);
 
         userInfo(holder, story.getUserId(), position);
@@ -113,8 +110,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
                 }
             }
         });
-
-
     }
 
 
@@ -144,7 +139,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public ImageView storyPhoto;
         public ImageView storyPlus;
         public ImageView storyPhotoSeen;
@@ -207,7 +201,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -224,7 +217,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-
         reference.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
@@ -237,7 +229,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
                 for (DataSnapshot snapshot: dataSnapshot.getChildren())
                 {
                     Story story = snapshot.getValue(Story.class);
-
 
                     if (timeCurrent > story.getTimeStart() && timeCurrent < story.getTimeEnd())
                     {
@@ -333,9 +324,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story").child(userId);
 
 
-
-
-
         reference.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -369,11 +357,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
-
 }

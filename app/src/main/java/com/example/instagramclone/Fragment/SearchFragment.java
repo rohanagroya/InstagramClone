@@ -31,13 +31,11 @@ import java.util.List;
 
 public class SearchFragment extends Fragment
 {
-
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> mUsers;
 
     EditText search_bar;
-
 
 
 
@@ -51,15 +49,11 @@ public class SearchFragment extends Fragment
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         search_bar = view.findViewById(R.id.search_bar);
-
-
 
         mUsers = new ArrayList<>();
 
         userAdapter = new UserAdapter(getContext(), mUsers, true);
-
         recyclerView.setAdapter(userAdapter);
 
 
@@ -72,20 +66,17 @@ public class SearchFragment extends Fragment
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after)
             {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 searchUsers(s.toString().toLowerCase());
-
             }
 
             @Override
             public void afterTextChanged(Editable s)
             {
-
             }
         });
 
@@ -103,8 +94,6 @@ public class SearchFragment extends Fragment
                 .endAt(s + '\uf8ff');
 
 
-
-
         query.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -119,17 +108,13 @@ public class SearchFragment extends Fragment
                 }
 
 
-
                 userAdapter.notifyDataSetChanged();
             }
-
-
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -151,7 +136,6 @@ public class SearchFragment extends Fragment
                     mUsers.clear();
 
 
-
                     for (DataSnapshot snapshot: dataSnapshot.getChildren())
                     {
                         User user = snapshot.getValue(User.class);
@@ -162,16 +146,12 @@ public class SearchFragment extends Fragment
 
                     userAdapter.notifyDataSetChanged();
                 }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
 }

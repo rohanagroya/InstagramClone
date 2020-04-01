@@ -47,11 +47,9 @@ public class PostDetailFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
 
-
         SharedPreferences preferences = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
 
         postId = preferences.getString("postid", "none");
-
 
 
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -61,22 +59,14 @@ public class PostDetailFragment extends Fragment
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
-
-
-
-
-
         postList = new ArrayList<>();
 
         postAdapter = new PostAdapter(getContext(), postList);
 
         recyclerView.setAdapter(postAdapter);
 
-        
 
         readPost();
-
 
         return view;
     }
@@ -88,9 +78,6 @@ public class PostDetailFragment extends Fragment
     private void readPost()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts").child(postId);
-
-
-
 
         reference.addValueEventListener(new ValueEventListener()
         {
@@ -110,15 +97,8 @@ public class PostDetailFragment extends Fragment
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
-
-
-
-
-
-
 
     }
 }

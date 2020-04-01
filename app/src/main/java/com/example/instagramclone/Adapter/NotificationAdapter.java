@@ -32,7 +32,6 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>
 {
-
     private Context mContext;
     private List<Notification> mNotification;
 
@@ -51,7 +50,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     {
         View view = LayoutInflater.from(mContext).inflate(R.layout.notification_item, parent, false);
 
-
         return new NotificationAdapter.ViewHolder(view);
     }
 
@@ -61,7 +59,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
-
         final Notification notification = mNotification.get(position);
 
         holder.text.setText(notification.getText());
@@ -188,7 +185,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -217,9 +213,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
 }

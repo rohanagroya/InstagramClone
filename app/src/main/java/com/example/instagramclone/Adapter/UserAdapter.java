@@ -29,8 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
+
+
+
+
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 {
@@ -49,11 +52,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
         this.mUsers = mUsers;
         this.isFragment = isFragment;
     }
-
-
-
-
-
 
 
 
@@ -88,7 +86,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
 
 
-
         isFollowing(user.getId(), holder.btn_follow);
             // Displays button next to other user's username.
             // if following, button displays "following". Else, it displays "follow"
@@ -116,7 +113,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                     editor.apply();
 
                     ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-
                 }
                 else
                 {
@@ -126,7 +122,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
                     mContext.startActivity(intent);
                 }
-
             }
         });
 
@@ -145,7 +140,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(user.getId()).child("Followers").child(firebaseUser.getUid()).setValue(true);
 
-
                     addNotification(user.getId());
                 }
 
@@ -154,12 +148,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("Following").child(user.getId()).removeValue();
 
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(user.getId()).child("Followers").child(firebaseUser.getUid()).removeValue();                }
-
             }
         });
-
-
-
     }
 
 
@@ -172,15 +162,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userId);
 
-
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("userId", firebaseUser.getUid());
         hashMap.put("text", "started following you");
         hashMap.put("postId", "");
         hashMap.put("isPost", false);
-
-
 
 
         reference.push().setValue(hashMap);
@@ -202,11 +189,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
 
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-
         public TextView username;
         public TextView fullName;
         public CircleImageView image_profile;

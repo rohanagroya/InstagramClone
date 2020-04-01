@@ -25,7 +25,6 @@ import java.util.List;
 
 public class FollowersActivity extends AppCompatActivity
 {
-
     String id;
     String title;
 
@@ -96,9 +95,7 @@ public class FollowersActivity extends AppCompatActivity
             case "Views":
                 getViews();
                 break;
-
         }
-
     }
 
 
@@ -160,7 +157,6 @@ public class FollowersActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -194,7 +190,6 @@ public class FollowersActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -226,7 +221,6 @@ public class FollowersActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -266,13 +260,7 @@ public class FollowersActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
-
-
-
 }

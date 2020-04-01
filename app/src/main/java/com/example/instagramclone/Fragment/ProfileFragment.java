@@ -76,7 +76,6 @@ public class ProfileFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
@@ -461,8 +460,6 @@ public class ProfileFragment extends Fragment
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
 
-
-
         reference.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -489,11 +486,8 @@ public class ProfileFragment extends Fragment
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
-
-
     }
 
 
@@ -528,7 +522,6 @@ public class ProfileFragment extends Fragment
 
             }
         });
-
     }
 
 
@@ -566,12 +559,5 @@ public class ProfileFragment extends Fragment
 
             }
         });
-
     }
-
-
-
-
-
-
 }

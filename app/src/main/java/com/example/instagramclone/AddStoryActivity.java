@@ -29,12 +29,10 @@ import java.util.HashMap;
 
 public class AddStoryActivity extends AppCompatActivity
 {
-
     private Uri mImageUri;
     String myUrl = "";
     private StorageTask storageTask;
     StorageReference storageReference;
-
 
 
 
@@ -51,8 +49,6 @@ public class AddStoryActivity extends AppCompatActivity
         CropImage.activity()
                 .setAspectRatio(9, 16)
                 .start(AddStoryActivity.this);
-
-
     }
 
 
@@ -145,7 +141,6 @@ public class AddStoryActivity extends AppCompatActivity
 
                 }
             });
-
         }
         else
         {

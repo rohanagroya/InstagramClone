@@ -33,7 +33,6 @@ import java.util.Objects;
 
 public class CommentsActivity extends AppCompatActivity
 {
-
     private RecyclerView recyclerView;
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;
@@ -131,8 +130,6 @@ public class CommentsActivity extends AppCompatActivity
 
         getImage();
         readComments();
-
-
     }
 
 
@@ -221,7 +218,6 @@ public class CommentsActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -260,13 +256,7 @@ public class CommentsActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
-
-
-
 }

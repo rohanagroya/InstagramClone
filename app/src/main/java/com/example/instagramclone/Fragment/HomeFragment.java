@@ -30,50 +30,41 @@ import java.util.List;
 
 public class HomeFragment extends Fragment
 {
-
+    // for regular posts
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postLists;
 
-
+    // for stories
     private RecyclerView recyclerViewStory;
     private StoryAdapter storyAdapter;
     private List<Story> storyList;
 
 
-
     private List<String> followingList;
-
     ProgressBar progressBar;
-
-
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+        // For Regular Posts
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
-
-
         recyclerView.setLayoutManager(linearLayoutManager);
         postLists = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postLists);
         recyclerView.setAdapter(postAdapter);
 
 
-
-        // for story feature
+        // For Story Feature
         recyclerViewStory = view.findViewById(R.id.recycler_view_story);
         recyclerViewStory.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -85,20 +76,14 @@ public class HomeFragment extends Fragment
 
 
 
-
-
-
-
-
-
         progressBar = view.findViewById(R.id.progress_circular);
 
         checkFollowing();
 
-
-
         return view;
     }
+
+
 
 
 
@@ -123,19 +108,14 @@ public class HomeFragment extends Fragment
                     followingList.add(snapshot.getKey());
                 }
 
-
                 readPosts();
                 readStory();
-
             }
-
-
 
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
@@ -144,13 +124,9 @@ public class HomeFragment extends Fragment
 
 
 
-
-
-
     private void readPosts()
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-
 
         reference.addValueEventListener(new ValueEventListener()
         {
@@ -172,8 +148,6 @@ public class HomeFragment extends Fragment
                     }
                 }
 
-
-
                 postAdapter.notifyDataSetChanged();
 
                 progressBar.setVisibility(View.GONE);
@@ -182,11 +156,8 @@ public class HomeFragment extends Fragment
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
-
-
     }
 
 
@@ -197,7 +168,6 @@ public class HomeFragment extends Fragment
     {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story");
 
-
         reference.addValueEventListener(new ValueEventListener()
         {
             @Override
@@ -206,15 +176,15 @@ public class HomeFragment extends Fragment
                 long timeCurrent = System.currentTimeMillis();
 
                 storyList.clear();
-
                 storyList.add( new Story("", "", 0, 0, FirebaseAuth.getInstance().getCurrentUser().getUid()));
 
 
                 for (String id: followingList)
                 {
-                    int countStory = 0;
+                    int storyCount = 0;
 
                     Story story = null;
+
 
                     for (DataSnapshot snapshot: dataSnapshot.child(id).getChildren())
                     {
@@ -222,11 +192,11 @@ public class HomeFragment extends Fragment
 
                         if (timeCurrent > story.getTimeStart() && timeCurrent < story.getTimeEnd())
                         {
-                            countStory++;
+                            storyCount++;
                         }
                     }
 
-                    if (countStory > 0)
+                    if (storyCount > 0)
                     {
                         storyList.add(story);
                     }
@@ -240,12 +210,7 @@ public class HomeFragment extends Fragment
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
-
-
 }

@@ -31,11 +31,8 @@ public class LoginActivity extends AppCompatActivity
 
     EditText email;
     EditText password;
-
     Button login;
-
     TextView textSignUp;
-
     FirebaseAuth auth;
 
 
@@ -48,22 +45,15 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
-
-
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        textSignUp = findViewById(R.id.text_sign_up);
-
+        textSignUp = findViewById(R.id.textSignUp);
 
         auth = FirebaseAuth.getInstance();
 
 
-
-
-        textSignUp.setOnClickListener(new View.OnClickListener()
+        textSignUp.setOnClickListener(new View.OnClickListener()            // when user clicks on "Don't have an account? Sign Up" TextView.
         {
             @Override
             public void onClick(View v)
@@ -73,28 +63,17 @@ public class LoginActivity extends AppCompatActivity
         });
 
 
-
-
-
-        login.setOnClickListener(new View.OnClickListener()
+        login.setOnClickListener(new View.OnClickListener()                 // when user clicks on login button
         {
             @Override
             public void onClick(View v)
             {
                 final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
-
                 progressDialog.setMessage("Please wait...");
                 progressDialog.show();
 
-
-
-
                 String emailAsString = email.getText().toString();
                 String passwordAsString = password.getText().toString();
-
-
-
-
 
 
                 if (TextUtils.isEmpty(emailAsString) || TextUtils.isEmpty(passwordAsString))
@@ -103,8 +82,8 @@ public class LoginActivity extends AppCompatActivity
                 }
                 else
                 {
-                    auth.signInWithEmailAndPassword(emailAsString, passwordAsString)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>()
+                    // sign into account using firebase authorization
+                    auth.signInWithEmailAndPassword(emailAsString, passwordAsString).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>()
                             {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task)
@@ -122,39 +101,27 @@ public class LoginActivity extends AppCompatActivity
                                                 progressDialog.dismiss();
 
                                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
                                                 startActivity(intent);
 
                                                 finish();
                                             }
 
 
-
-
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError)
                                             {
-
                                             }
                                         });
-
                                     }
                                     else
                                     {
                                         progressDialog.dismiss();
-
                                         Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-
-
-
-
             }
         });
     }

@@ -30,7 +30,6 @@ import java.util.List;
 
 public class NotificationFragment extends Fragment
 {
-
     private RecyclerView recyclerView;
     private NotificationAdapter notificationAdapter;
     private List<Notification> notificationList;
@@ -50,23 +49,13 @@ public class NotificationFragment extends Fragment
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
         notificationList = new ArrayList<>();
-
 
         notificationAdapter = new NotificationAdapter(getContext(), notificationList);
 
         recyclerView.setAdapter(notificationAdapter);
 
-
-
-
-
         readNotifications();
-
-
-
-
 
         return view;
     }
@@ -87,16 +76,12 @@ public class NotificationFragment extends Fragment
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(firebaseUser.getUid());
 
 
-
-
         reference.addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-
                 notificationList.clear();
-
 
 
                 for (DataSnapshot snapshot: dataSnapshot.getChildren())
@@ -109,18 +94,12 @@ public class NotificationFragment extends Fragment
                 Collections.reverse(notificationList);
 
                 notificationAdapter.notifyDataSetChanged();
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError)
             {
-
             }
         });
     }
-
-
-
-
 }
