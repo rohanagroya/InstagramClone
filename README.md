@@ -7,7 +7,7 @@ Link: https://youtu.be/fYkpwqPXC-8
 
 Things Learned:
 - Basic Android app creation process. 
-- Connecting Activities, Fragments, Intents. 
+- Connecting Activities, Fragments, Intents, Adapters etc
 - Firebase Database
 - Firebase Authentication 
 - Referencing Documentations
