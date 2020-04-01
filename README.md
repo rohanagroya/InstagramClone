@@ -7,11 +7,29 @@ Link: https://youtu.be/fYkpwqPXC-8
 
 Things Learned:
 - Basic Android app creation process. 
-- Connecting Activities, Fragments, Intents, Adapters etc
+- Use of documentations.
 - Firebase Database
 - Firebase Authentication 
 - Referencing Documentations
 - MVVM model
+
+
+Features:
+- User registration
+- Login / logout
+- Display posts
+- Add posts from camera or photo library with description
+- Add story for limited time to see
+- Follow users
+- Like posts 
+- Comment on other posts
+- Follow and unfollow
+- Display number of likes, followers, following, story views
+- Edit profile
+- Save photos to favorites
+- search users
+
+
 
 
 Resources Used:
