@@ -1,9 +1,4 @@
 # InstagramClone
-Instaram clone application for android created for personal learning purposes.  
-Reference used KOD Dev: Instagram App with Firebase.
-Link: https://youtu.be/fYkpwqPXC-8
-
-
 
 Things Learned:
 - Basic Android app creation process. 
